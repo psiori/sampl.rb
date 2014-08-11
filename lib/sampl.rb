@@ -18,7 +18,7 @@ module Sampl
       event_category: "custom",
       server_side:    true
     })
-    base.instance_variable_set("@default_endpoint", "http://events.neurometry.com/sample/v01/event")
+    base.instance_variable_set("@default_endpoint", "https://events.neurometry.com/sample/v01/event")
   end  
   
   module ClassMethods
