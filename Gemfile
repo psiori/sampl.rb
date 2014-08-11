@@ -7,4 +7,6 @@ gem 'httparty', '~> 0.13'
 group :test do
   gem 'minitest', '~> 5.3.0'
   gem 'ci_reporter_minitest', '~> 1.0.0'
+  gem 'simplecov'
+  gem 'simplecov-rcov'
 end
