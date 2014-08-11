@@ -11,5 +11,5 @@ SimpleCov.formatter = SimpleCov::Formatter::MergedFormatter
 
 SimpleCov.start do
   add_filter "/test/"
-  add_filter "/vendor/"
+  add_filter "vendor"
 end
