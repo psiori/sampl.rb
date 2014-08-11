@@ -81,6 +81,7 @@ module Sampl
         HTTParty.post(endpoint, 
                       body: { p: arguments }, 
                       headers: { 'Accept' => 'application/json'}, 
+                      verify: false,
                       &block)
       end
     

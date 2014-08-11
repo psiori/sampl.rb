@@ -6,6 +6,7 @@
 /pkg/
 /spec/reports/
 /test/tmp/
+/test/reports/
 /test/version_tmp/
 /tmp/
 

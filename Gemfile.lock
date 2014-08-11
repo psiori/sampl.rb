@@ -7,11 +7,17 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    builder (3.2.2)
+    ci_reporter (2.0.0)
+      builder (>= 2.1.2)
+    ci_reporter_minitest (1.0.0)
+      ci_reporter (~> 2.0)
+      minitest (~> 5.0)
     httparty (0.13.1)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
     json (1.8.1)
-    minitest (5.4.0)
+    minitest (5.3.5)
     multi_xml (0.5.5)
     rake (10.3.2)
 
@@ -19,7 +25,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ci_reporter_minitest (~> 1.0.0)
   httparty (~> 0.13)
-  minitest (~> 5.4.0)
+  minitest (~> 5.3.0)
   rake
   sampl!
