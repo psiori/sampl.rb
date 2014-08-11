@@ -1,4 +1,4 @@
-analytics-sample.rb
-===================
+Sample.rb
+=========
 
 Report tracking events from a Ruby on Rails server.
