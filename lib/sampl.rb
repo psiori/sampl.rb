@@ -1,14 +1,16 @@
 require 'httparty'
 
 require 'sampl/version'
-require 'sampl/util'
 
 module Sampl
 
   def self.included(base)
     base.extend ClassMethods
-    base.send :include, Sampl::Util
+    base.send :include, HTTParty::ModuleInheritableAttributes
+    base.send(:mattr_inheritable, :default_arguments)
+    base.send(:mattr_inheritable, :endpoint)
     base.instance_variable_set("@default_arguments", {})
+    base.instance_variable_set("@endpoint", "http://events.neurometry.com/sample/v01/event")
   end  
   
   module ClassMethods
@@ -29,6 +31,10 @@ module Sampl
       @default_arguments
     end
     
+    def endpoint
+      @endpoint
+    end 
+    
     private
     
       def perform_tracking(event_name, event_category, arguments, &block)
@@ -38,7 +44,7 @@ module Sampl
           event_category: event_category
         })
         
-        HTTParty.post('http://events.neurometry.com/sample/v01/event', 
+        HTTParty.post(endpoint, 
                       body: { p: arguments }, 
                       headers: { 'Accept' => 'application/json'}, 
                       &block)
