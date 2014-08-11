@@ -58,7 +58,7 @@ module Sampl
         arguments = HTTParty::ModuleInheritableAttributes.hash_deep_dup(default_arguments).merge(arguments).merge({
           event_name: event_name,
           event_category: event_category
-        })
+        }).select { |key, value| !value.blank? }
         
         HTTParty.post(endpoint, 
                       body: { p: arguments }, 
