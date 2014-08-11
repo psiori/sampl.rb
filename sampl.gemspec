@@ -13,6 +13,8 @@ Gem::Specification.new do |s|
   s.email         = 'sascha@5dlab.com'
   s.homepage      = 'https://github.com/wackadoo/sampl.rb'
   s.license       = 'MIT'
+
+  s.required_ruby_version    = ">= 1.9.3"
   
   s.add_dependency 'httparty', "~> 0.13"
 
