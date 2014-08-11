@@ -61,14 +61,18 @@ module Sampl
     
     private
     
+      def my_blank?(value)
+        value.nil? || (value.respond_to?(:empty?) ? !!value.empty? : false)
+      end
+    
       def perform_tracking(event_name, event_category, arguments, &block) # :nodoc:
         # this is the central method that actually performs the tracking call
         # with the help of HTTParty.
         
-        arguments.merge({
+        arguments = arguments.merge({
           event_name: event_name,
           event_category: event_category # will overwrite default value, iff provided and not blank?
-        }).select { |key, value| !value.blank? }
+        }).select { |key, value| !my_blank?(value) }
   
         arguments = HTTParty::ModuleInheritableAttributes.hash_deep_dup(default_arguments).merge({
           timestamp: DateTime.now        # will be overwritten by (optional) user-provided timestamp
