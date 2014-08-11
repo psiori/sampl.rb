@@ -13,8 +13,10 @@ module Sampl
     base.send(:mattr_inheritable, :default_arguments)
     base.send(:mattr_inheritable, :default_endpoint)
     base.instance_variable_set("@default_arguments", {
-      sdk:         "Sampl.rb",
-      sdk_version: Sampl::VERSION,
+      sdk:            "Sampl.rb",
+      sdk_version:    Sampl::VERSION,
+      event_category: "custom",
+      server_side:    true
     })
     base.instance_variable_set("@default_endpoint", "http://events.neurometry.com/sample/v01/event")
   end  
@@ -44,6 +46,14 @@ module Sampl
         default_arguments[:app_token] = app_token
       end
     end
+    
+    def server_side(flag=nil)
+      if flag.nil?
+        default_arguments[:server_side]  
+      else
+        default_arguments[:server_side] = flag
+      end
+    end
         
     def track(event_name, event_category="custom", arguments={}, &block)
       perform_tracking event_name, event_category, arguments, &block
@@ -54,11 +64,15 @@ module Sampl
       def perform_tracking(event_name, event_category, arguments, &block) # :nodoc:
         # this is the central method that actually performs the tracking call
         # with the help of HTTParty.
-  
-        arguments = HTTParty::ModuleInheritableAttributes.hash_deep_dup(default_arguments).merge(arguments).merge({
+        
+        arguments.merge({
           event_name: event_name,
-          event_category: event_category
+          event_category: event_category # will overwrite default value, iff provided and not blank?
         }).select { |key, value| !value.blank? }
+  
+        arguments = HTTParty::ModuleInheritableAttributes.hash_deep_dup(default_arguments).merge({
+          timestamp: DateTime.now        # will be overwritten by (optional) user-provided timestamp
+        }).merge(arguments)
         
         HTTParty.post(endpoint, 
                       body: { p: arguments }, 
@@ -86,6 +100,10 @@ module Sampl
   
   def self.app_token(app_token=nil)
     Basement.app_token(app_token)
+  end
+
+  def self.server_side(flag=nil)
+    Basement.server_side(flag)
   end
   
   def self.track(*args, &block)
